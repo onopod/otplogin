@@ -55,7 +55,7 @@ async function handler(req, res) {
   }
 
   if (req.method === 'POST' && req.url === '/api/register') {
-    const { phone } = await readBody(req);
+    const { phone, username, password } = await readBody(req);
     const status = verifiedPhones.has(phone) ? 'registered' : 'not_verified';
     if (status === 'registered') {
       verifiedPhones.delete(phone);
