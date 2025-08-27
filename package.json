@@ -4,11 +4,21 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "dev": "concurrently \"node server.js\" \"next dev\"",
+    "build": "next build",
     "start": "node server.js",
     "test": "node --test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "module",
+  "dependencies": {
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }

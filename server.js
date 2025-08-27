@@ -1,4 +1,9 @@
-const http = require('http');
+import { createServer as createHttpServer } from 'http';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const otpStore = new Map(); // phone -> { code, expiresAt }
 const verifiedPhones = new Set();
@@ -70,7 +75,7 @@ async function handler(req, res) {
 }
 
 function createServer() {
-  return http.createServer((req, res) => {
+  return createHttpServer((req, res) => {
     handler(req, res).catch(err => {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'internal_error' }));
@@ -78,12 +83,15 @@ function createServer() {
   });
 }
 
-if (require.main === module) {
+// Check if this file is being run directly
+const isMainModule = import.meta.url === `file://${process.argv[1]}`;
+
+if (isMainModule) {
   const server = createServer();
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3001;
   server.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
 }
 
-module.exports = { createServer, otpStore, verifiedPhones, OTP_TTL_MS };
+export { createServer, otpStore, verifiedPhones, OTP_TTL_MS };
