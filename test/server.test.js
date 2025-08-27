@@ -1,6 +1,6 @@
-const test = require('node:test');
-const assert = require('node:assert');
-const { createServer, otpStore, verifiedPhones } = require('../server');
+import test from 'node:test';
+import assert from 'node:assert';
+import { createServer, otpStore, verifiedPhones } from '../server.js';
 
 const phone = '+819012345678';
 
